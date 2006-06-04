@@ -1,0 +1,71 @@
+$Id: cool.txt 6 2004-08-05 19:23:09Z dietsche $
+Extremely Interesting Ideas (EII) (tm ;)
+
+Warning, You Have Been WarNed.
+
+...When Bad Comes to Worse, and you need to **reset** your peripheral brain...:
+...ie loose everything...
+...and remember 2nd-left-right-on does wonders with a TI-89...
+...likewise, 2nd-hand-on does wonders with a TI-92Plus or V200...
+
+
+***EII #1:
+Change the Logical Screen Height:
+Jump To Address 0h600013
+Edit Size=BYTE
+Mask=NONE
+Value = 256-x (default: x=128 lines tall)
+Any value from 256-0 through 256-256 is valid. On the TI-92p/V200 you might experiment with 256-112
+or 256-84 on the TI-89. Be careful! Small x values result in extremely dark contrast settings while
+large x values result in extremely light contrast settings (the contrast side-effect is a direct 
+relationship with the refresh rate). Neat, Huh?
+
+
+***EII #2:
+Disable Auto Power On (Link Cable)
+Type bclr(0h60000c,7) on the home screen entry line
+After you do this, the calculator will not turn on when you insert a link cable into the i/o port
+
+***EII #3:
+Enable Auto Power On (Link Cable)
+To Restore normal operation after using EII #2(insert cable, calculator turns on) try this:
+Type bset(0h60000c,7) on the home screen entry line
+
+After you do this, the calculator will turn on when you instet a link cable into the i/o port
+
+***EII #4:
+Make Your calculator do some things Fast, Normal, Slow, or Slower!
+This affects Auto Interrupts 1,5 and _Possibly_ Auto Interrupt 3 on HW1 calcs (i should check this).
+ Auto Interrupt 3 is not changed on HW2 models.
+
+Fast:				Type bclr(0h600015,5):bclr(0h600015,4) on the home screen entry line
+Normal (Default):	Type bclr(0h600015,5):bset(0h600015,4) on the home screen entry line
+Slower:				Type bset(0h600015,5):bclr(0h600015,4) on the home screen entry line
+Slowest:			Type bset(0h600015,5):bset(0h600015,4) on the home screen entry line
+
+
+***EII #5:
+Hide A Variable (Method #1 Change the First letter)
+Use the Var-Link From Within Command Post to select the variable you wish to hide
+Press ENTER, and Choose "Sym Entry"
+Change the first BYTE to any number from 0h00 to 0h40
+
+***EII #6:
+Hide A Variable (Method #2 Set the In-Use Bit)
+Use the Var-Link From Within Command Post to select the variable you wish to hide
+Press ENTER, and Choose "Sym Entry"
+Press DIAMOND, Down, Left, Left, Left, Left
+Bring up the EDIT dialog, set the mask to OR and type the value 0h10
+
+to undo this operation, you must make sure that you are editing the SYM_ENTRY of
+the varible you wish to unhide. Next Use the edit dialog (with the cursor at the
+same location in the SYM_ENTRY struct as before) change the mask to AND, and type the value
+"not 0h10" without the quotation marks into the value field
+
+
+***EII #7:
+Speaking of strings, take the RedPillNeo
+Software that calls itself a hardware patch is quite helpful.
+
+***EII #8:
+Its All About Shift + g

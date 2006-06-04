@@ -1,0 +1,61 @@
+<!--Command Post: External Databases - Special Topics -->
+
+<center>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr>
+      <td align="left"> <b><font size="-1" face="Arial">Command Post Home Page : <font color=#FF0000>External
+              Databases - Special Topics</font></font></b><br>
+      </td>
+      <td align="right"><font size="-1">
+        <div class="text2"> <a href="index.htm">Goto Table of Contents</a></div>
+        </font> </td>
+    </tr>
+  </table>
+  <br>
+</center>
+<center>
+  <font size="+1"><b>External Databases - Special Topics</b></font>
+</center>
+<p><br>
+  Command Post utilizes external databases to provide certain features. There
+    is no need to install these databases, but without them, certain features
+    will be
+    unavailable. All Command Post databases have the extension <em><strong>CPDB</strong></em>.
+    You can place the databases in any folder on your calculator, but do not
+    change the names of the databases.
+    We recommend that you <strong>archive</strong> your databases for best results.</p>
+<p><strong>Special Topics:</strong></p>
+<ul>
+  <li><a href="#RomCallDatabase">Rom Call Database</a> (romcalls.CPDB)</li>
+  <li><a href="#MemoryLocationsDatabase">Memory Locations Database</a> (memdat.CPDB)</li>
+</ul>
+<hr>
+<p><strong><font size="+1"><a name="RomCallDatabase"></a>Rom Call Database </font></strong>(<a href="downloads/RomCalls.zip">download</a>)</p>
+<p>The rom call database is called <em>romcalls.</em> When this database is installed,
+  Command Post will automatically try to determine which asm statements in the disassembly
+  refer to a rom call. If a match is made, Command Post will place a comment following
+  the statement with the corresponding rom call name. Additionally, if you are viewing
+  the first line of a known rom call in the disassembly view, Command Post will place
+  the name of the rom call in the status line. You can download the current romcalls
+  database from <a href="downloads/RomCalls.zip">this location</a> (full source code
+  and instructions for making your own database are included). If you make any updates
+  which would benefit the public, be sure to contact <a href="javascript:nospam('cmdpost');void('')">us</a>!</p>
+<p><strong>NOTE:</strong> Command Post will attempt to generate a small (approximately
+  5K) internal database from the RomCalls database. If there is not enough
+  free RAM to do this, Command Post will
+  not tell you when you are at the first byte of a rom call in the disassembly view.</p>
+<p align="center"><img src="images/ROMCALLDB_EXAMPLE.png" alt="Rom Calls Database In Action" width="244" height="132"></p>
+<hr>
+<p><strong><font size="+1"><a name="MemoryLocationsDatabase"></a>Memory Locations
+      Database </font></strong>(<a href="downloads/memdat.zip">download</a>)</p>
+<p>The memory locations database is called <em>memdat.</em> When installed, this
+  database gives Command Post the ability to name Absolute Memory Addresses. As you
+  move the Hex Editor Cursor, or the disassembly view over a recognized address,
+  Command Post will alert you by placing the associated name in the status bar. You
+  can download the current <em>memdat</em> database from <a href="downloads/memdat.zip">this
+    location</a> (full source code and instructions for making your own database
+are included). If you make any updates which would benefit the public, be sure to
+    contact <a href="javascript:nospam('cmdpost');void('')">us</a>!</p>
+<p align="center"><img src="images/MEMDATDB_EXAMPLE.png" alt="Memory Locations Database In Action" width="244" height="132"></p>
+
+<hr>

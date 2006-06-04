@@ -1,0 +1,232 @@
+<!--Command Post: F3-->
+
+<center>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr>
+      <td align="left"> <b><font size="-1" face="Arial">Command Post Home Page : <font color=#FF0000>F3</font></font></b><br>
+      </td>
+      <td align="right"><font size="-1">
+        <div class="text2"> <a href="index.htm">Goto Table of Contents</a></div>
+        </font> </td>
+    </tr>
+  </table>
+  <br>
+  <font size="+1"><b>F3: Command Post Tools</b></font>
+</center>
+<p>The Tools tool bar menu gives you access to several of the most advanced features
+  in Command Post. The Low Ram Simulation allows you to test your programs and applications
+  under extremely low memory conditions. The Leak Watch feature allows you to monitor
+  your applications so that they do not leak memory. The App Info feature gives detailed
+  information about the 3rd party apps installed on your calculator, and the Heap
+  Walk function allows you to &quot;dump&quot; the contents of the heap to the link
+  port for external debugging.</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="27%">
+      <ol>
+        <li><b><a href="#LowRAM">Low RAM Simulation</a></b></li>
+        <li><b><a href="#LeakWatch">Leak Watch</a></b></li>
+        <li><b><a href="#AppInfo">App Info</a></b></li>
+        <li><b><a href="#LinkPortLogger">Link Port Logger</a></b></li>
+        <li><b><a href="#DASM_TOOLS">Disassembly Tools</a></b></li>
+        <li><b><a href="#HeapWalk">Heap Walk</a> </b>
+          <ol>
+            <li><b>H_WALK_STATUS</b></li>
+            <li><b>H_WALK_DUMP</b></li>
+            <li><b>H_WALK_SYM</b></li>
+          </ol>
+        </li>
+      </ol>
+    </td>
+    <td width="73%">
+      <div align="center"><img src="images/TOOLMENU_1.png" alt="F3" width="244" height="132">&nbsp;<img src="images/TOOLMENU_2.png" alt="F3 Heap Walk" width="244" height="132"></div>
+    </td>
+  </tr>
+</table>
+<br>
+<hr>
+<p><font size="+1"><a name="LowRAM"></a><strong>Low RAM Simulation</strong></font></p>
+<p>The <b>Low RAM Simulation</b> allows you to test your programs and applications
+  under low memory conditions. You have two modes of operation available. The <b>All
+  Except mode</b> uses all available ram except the number of bytes that you specify
+  in the Bytes edit box. The <b>Use</b> <b>mode</b> uses the number of bytes specified
+  in the Bytes edit box up to the amount of free memory available.</p>
+<p>When the Low RAM Simulation is used from within Command Post, the new settings
+  will be applied immediately, and when you switch to another application. As a result,
+  if you specify that the simulation use more ram than Command Post requires, Command
+  Post will refuse to start.</p>
+<p><b>Tip: </b>If you have trouble using your calculator because of the Low Ram simulation,
+  using the <b>TI-Basic extension</b> to turn off the low memory simulation is recommended.
+  Ex: <b>LowMem(0) </b>If the TI-Basic extension fails to work because there is not
+  enough free RAM, then use the Var-Link to delete the temporary variables created
+  with the low ram simulation. The variables have this format:<b> lowmemxx </b>where
+  xx is a hexadecimal number from 0x0 to 0x32.<br>
+</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="29%"><img src="images/LOWRAMSIM.png" alt="Low Ram Simulation" width="244" height="132"></td>
+    <td width="71%">
+      <p><b>Tip: </b>The low ram simulation is also available as a <a href="tibasic.htm#LowMem">TI-Basic
+          extension</a></p>
+    </td>
+  </tr>
+</table>
+<br>
+<hr>
+<p><font size="+1"><a name="LeakWatch"></a><strong>Leak Watch</strong></font></p>
+<p>The Command Post Leak Watch tool is designed specifically for interactive FLASH
+  Applications. With it, you can monitor any third party application for possible
+  memory leaks. Command Post will report any change in the amount of free ram (Delta
+  RAM) positive or negative. Negative values indicate memory loss, and positive values
+  indicate a gain in total available memory.</p>
+<p><b>Leak Watch Example 1:</b><br>
+  The default template and examples that come with the current beta release of Flash
+    Studio have some bugs that we need to find. One of those bugs is that the template
+    does not call the default event handler in its CM_DEACTIVATE event (as of 08/06/2002).
+    That causes a memory leak because the memory allocated for the application's
+    toolbar will not be freed! Current versions of Flash Studio have corrected this
+    bug in the templates.</p>
+<p><b>Step 1: </b>Install Leak Watch on the application(s) to monitor. In this example,
+  we will use <b>app1</b>, which was created from the default FLASH Application template.<br>
+</p>
+<p align="center"><img src="images/LEAKWATCH1.png" alt="Leak Watch Install Hook" width="244" height="132"> &nbsp;<img src="images/LEAKWATCH2.png" alt="Leak Watch is now monitoring app1" width="244" height="132"> </p>
+<p>If the leak watch hook installation was successful, Command Post will inform you
+  (see above picture).<br>
+  <b>Step 2:</b> start <b>App1</b> by pressing the <b>APPS </b> key, and running<b> App1</b>.</p>
+<p align="center"><img src="images/LEAKWATCH3.png" alt="App1 After being launched" width="244" height="132">&nbsp;<img src="images/LEAKWATCH4.png" alt="Leak Watch Report for App1" width="244" height="132"></p>
+<p><b>Step 3:</b> exit App1 by pressing 2nd Quit<br>
+  <br>
+  Command Post will inform you of a possible memory leak. In this case, the amount
+  of lost ram was 88 bytes contained within 2 handles. In this case, one of the handles
+  is a legitimate memory loss - its not a leak, but some overhead that the OS initializes
+  on the first run of App1. The second handle that was lost IS a memory leak of exactly
+  66 bytes. <strong>Note:</strong> Current versions of Flash Studio have been fixed, and the default
+FLASH Application template will not leak memory.</p>
+<p>At this point, an explanation of each item in the Leak Watch Report is in order.</p>
+<ul>
+  <li><b>Delta RAM </b>
+    <ul>
+      <li>This is an overall measure (in bytes) of the amount of ram <b>GAINED</b> or <b>LOSSED</b> while
+        the App was running interactively.</li>
+    </ul>
+  </li>
+  <li><b>Delta Vars</b><ul><li>This number is a representation of the variable table size (reported in
+        bytes using the HeapSize rom call while scanning each variable that has a
+        valid handle. Command Post will attempt to determine if files have been added
+        or removed, and adjust the Adjusted Delta
+RAM result accordingly.</li>
+    </ul>
+  </li>
+  <li><b>Adjusted Delta RAM </b>
+    <ul>
+      <li>This number is the amount of RAM <b>GAINED</b> or <b>LOSSED</b> while the
+        App was active. A negative number indicates a possible memory leak. A positive
+        number indicates that the amount of free ram before the program was run is
+        less than the amount of ram after the App has shut down.</li>
+    </ul>
+  </li>
+  <li><b>Delta Handles </b>
+    <ul>
+      <li>This number is the change in the number of handles while the App ran. A
+        negative number here is a possible memory leak. In any case, it indicates
+        how many handles your program is freeing or not freeing as the case may be.</li>
+    </ul>
+  </li>
+</ul>
+<hr>
+<p><font size="+1"><b><a name="AppInfo"></a>App Info</b></font></p>
+<p>The App Info feature gives you detailed information about each app installed on
+  your calculator. You may choose any app on the calculator including built-in OS
+  'Apps'.</p>
+<p>To use the App Info feature, Press <b>F3: 3 App Info</b>.<br>
+  Next, choose a Flash App.<img src="images/APP_INFO_1.png" alt="App Info - Choose App" width="244" height="132" align="middle"></p>
+<p>Now with an app selected, you may push <b>F2</b> to view the<b> App's ACB </b>structure
+  (ACB), <b>F3</b> shows the <b>App's Flash Header</b> (AppHdr), and<b> F4 </b>translates
+  the <b>App Flags</b> found in the ACB and AppHdr data structures into human readable
+  format.</p>
+<p align="center"><img src="images/APP_INFO_2.png" alt="App Info - ACB" width="244" height="132">&nbsp;<img src="images/APP_INFO_3.png" alt="App Info - HDR" width="244" height="132">&nbsp;<img src="images/APP_INFO_4.png" alt="App Info - Flags" width="244" height="132"></p>
+<p>When you are done with the App Info function, simply press <b>ENTER</b>, or <b>ESC</b> to
+  dismiss the dialog.</p>
+<hr>
+<p><font size="+1"><a name="LinkPortLogger" id="LinkPortLogger"></a><strong>Link
+Port Logger</strong></font></p>
+<p>The Link Port Logger is a simple tool which is designed to record data that is
+  transmitted to the link port. For example, you can use the Link Port Logger to
+  receive data from the <a href="#HeapWalk">HeapWalk</a> feature or to record the
+  <a href="ErrorLogs.xml">XML Error Report</a> from a crashed calculator which is
+  running Command Post.</p>
+<p align="center"><img src="images/LINK_LOGGER1.png">&nbsp;<img src="images/link_logger.png" alt="Link Port Logger" width="164" height="104"></p>
+<p>If you want to convert the link_log variable
+  to a text variable for viewing 
+  using the Text Editor Application, follow these steps:</p>
+<p><strong>Warning</strong>: only convert the link_log variable to the TEXT data
+  type if you know that there is <strong>NO</strong> binary data in the link_log
+variable!</p>
+<ol>
+  <li>Launch Command Post and use  the Var-Link to <a href="f_two.htm#Jmp_Var">jump to the
+      DATA</a> portion of the
+    link_log variable.</li>
+  <li><a href="f_one.htm#Special">Copy Special</a> (size=word)</li>
+  <li>Use the <a href="f_two.htm#Edit">edit dialog</a>. Set the Edit Size to <strong>Word</strong> and
+    the Mask to <strong>None</strong>. Paste
+    the number you copied previously into the edit box.</li>
+  <li>Subtract 4 from the number in the edit box. (The edit box should contain text
+    which looks like this: <strong>756-4</strong>)</li>
+  <li>Press  <img src="images/enter.png" alt="Enter" width="33" height="26" align="texttop"> to commit the change.</li>
+  <li> Jump to <a href="f_two.htm#Bookmarks">Bookmark #2</a> you may use the shortcut keys: <img src="images/diamond.png" alt="Diamond" width="29" height="20" align="texttop">&nbsp;<img src="images/down.png" alt="Down" width="33" height="19" align="texttop"></li>
+  <li> Jump To <a href="f_two.htm#JumpAddyHandle">Relative Address</a> -4 (negative
+    four).</li>
+  <li>Edit the byte by  replacing the number 6c with E0 .</li>
+  <li>At this point, the conversion is complete. The variable should have the type
+    &quot;TEXT&quot;. You may wish to rename the variable because the Command Post link port
+    logger will
+    refuse
+    to
+    modify
+    the
+    link_log
+    variable if it does not have the type of &quot;LOG&quot; </li>
+  <li>Open the variable with the Text Editor.</li>
+</ol>
+<hr>
+<p><font size="+1"><a name="DASM_TOOLS"></a><a name="RegisterDecoder" id="RegisterDecoder"></a><strong>Disassembly
+      Tools</strong></font></p>
+<p>The disassembly tools dialog provides extra support for the disassembler. You
+  can use the <em><strong>Rom Call To String</strong></em> tool to translate a rom call index to its name when
+  the rom call database is installed on your calculator. Additionally, you can use
+  the <em><strong>movem
+  predecrement</strong></em>  and <em><strong>movem postincrement</strong></em> tools
+  to translate register lists into readable strings such as <strong>a0-a6/d0-d7</strong>.</p>
+<p align="center"><img src="images/DISASSEMBLY_TOOLS.png" width="244" height="132">&nbsp;<img src="images/DISASSEMBLY_TOOLS1.png" width="244" height="132"></p>
+<p>The movem Register Decoder translates values such as 0xFFFE into a register
+  list for use with the movem <font size="-1" face="Verdana">mnemonic. This feature
+  was designed with two purposes in mind. One is to translate register
+  lists created by the <a href="http://tigcc.ticalc.org/" target="_blank">TIGCC</a>  compiler
+  which generates code such as <em>movem.l #0xfffe,-(sp)</em> in source files
+  generated from C code. The other purpose is to translate  movem mnemonics
+  when Command
+  Post is running with <a href="f_one.htm#VerboseMovem">Verbose Movem</a> turned off.</font></p>
+<p align="center">&nbsp;<img src="images/MOVEM_DECODER_1.png" alt="Step 2" width="244" height="132">&nbsp;&nbsp;<img src="images/MOVEM_DECODER_2.png" alt="Results" width="244" height="132"></p>
+<p align="left"><strong>Note:<br>
+&nbsp;</strong>&nbsp;Use the predecrement mode for statements
+  such as <em>movem.l d0-d7/a0-a6,<strong>-(a7)</strong></em>.<br>
+  &nbsp;&nbsp;Use the postincrement mode
+  for statements that follow the format <em>movem.l <strong>(a7)+</strong>,d0-d7/a0-a6</em>.</p>
+<hr>
+<p><b><font size="+1"><a name="HeapWalk"></a>Heap Walk</font></b></p>
+<p>The Heap Walk sub-functions simply call the AMS HeapWalk ROM call with the value
+  you select. All information is transmitted through the link port. For more information
+  about the HeapWalk rom call, see the <a href="http://tigcc.ticalc.org/doc/alloc.html#HeapWalk" target="_blank">TIGCC
+  HeapWalk documentation</a>,
+  or TI's documentation for their <a href="http://education.ti.com/us/developer/8992/download/download.html" target="_blank">SDK</a>.</p>
+<p>You
+    may use Command Post's <a href="#LinkPortLogger">Link Port Logger</a> feature,
+    <a href="http://www.ticalc.org/archives/files/fileinfo/327/32778.html">LinkNLog</a> (works
+    with Black, Gray, and USB cables), or a gray graphlink cable connected to
+    a computer which is running a program such as HyperTerminal
+    with the following settings: Bits Per Second <em>9600</em>, Data Bits <em>8</em>,
+    Parity <em>None</em>,
+    Stop Bits <em>1</em>, Flow Control <em>Hardware</em>. </p>
+<p align="center"><img src="images/TOOLMENU_2.png" alt="HeapWalk" width="244" height="132"></p>
+
+

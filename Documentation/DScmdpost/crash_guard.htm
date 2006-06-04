@@ -1,0 +1,123 @@
+<!--Command Post: Crash Guard Special Topic-->
+
+<center>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr>
+      <td align="left"> <b><font size="-1" face="Arial">Command Post Home Page : <font color="#FF0000">Crash
+              Guard - Special Topics</font></font></b><br>
+      </td>
+      <td align="right"><font size="-1">
+        <div class="text2"> <a href="index.htm">Goto Table of Contents</a></div>
+        </font> </td>
+    </tr>
+  </table>
+  <br>
+</center>
+<center>
+  <font size="+1"><b>Crash Guard - Special Topics</b></font>
+</center>
+<p>Crash Guard is the unique crash recovery technology utilized by Command Post.
+  With Crash Guard installed, you are given the chance to recover important
+  debugging information before resetting your calculator. When a crash occurs,
+  Crash Guard presents a short crash recovery wizard which allows you to send <a href="#XML_Data_Format">XML
+  Formatted
+  data</a> to a PC or calculator for later analysis. Next, Crash Guard will take
+  you to the disassembly view which shows the code that caused the crash.</p>
+<ul>
+  <li><a href="#Action">Crash Guard In Action</a></li>
+  <li><a href="#ErrorsHandled">Errors Handled By Crash Guard</a></li>
+  <li><a href="#XML_Data_Format">XML Data Format</a></li>
+  <li><a href="#PCLinkSettings">Recommended PC Link Settings</a></li>
+</ul>
+<hr>
+<p align="center"><strong><font size="+1"><a name="Action"></a>Crash Guard In Action</font></strong></p>
+<p>Here is a short example showing Crash Guard in action. I have used the errorsim
+  program found in the errorsimulations folder of <a href="http://calc.gregd.org/download.php?explain=1&what=kerno">KerNO</a>.
+  First, you will be asked if you want to transmit debugging information to the link
+  port. Next, Crash Guard will ask if you wish to view the disassembly. Following
+  your choice, Crash Guard will throw the error (this tells the AMS that there was
+  an
+  error), and then take you to the disassembly. If the program that crashed was executed
+  from the home screen, the error will be shown in the history area.</p>
+<p align="center"><img src="images/CRASHGUARD1.png" alt="Step 1: Send Debugging Information To The Link Port?" width="244" height="132">&nbsp;<img src="images/CRASHGUARD2.png" alt="Step 2: Jump To Disassembly?" width="244" height="132">&nbsp;<img src="images/CRASHGUARD3.png" alt="Step 3: Crash Guard Throws The Error" width="244" height="132"></p>
+<p align="center">&nbsp;<img src="images/CRASHGUARD4.png" alt="Step 4: Show The Disassembly" width="244" height="132">&nbsp;<img src="images/CRASHGUARD5.png" alt="Step 5: If the program was run from the home screen, the error will be shown in the history area." width="244" height="132"></p>
+<p align="center">&nbsp;</p>
+<p align="left"><strong>NOTE:</strong> If a ASM program crashes, and was archived,
+  the disassembly view may be incorrect because the operating system frees the
+  handle associated
+  with that program. If you want to view the disassembly of a crashed ASM program,
+  make a copy of it in the ram, and make that copy crash ;)</p>
+<p align="left"><strong>NOTE</strong>: Because of the way the M68k CPU stores
+  crash data, the PC (program counter) may point a few bytes ahead of the actual
+  instruction
+  which caused the crash. Usually, if you push the minus (<img src="images/minus.PNG" alt="minus" width="31" height="19" align="absmiddle">) key a few times,
+  you will see the instruction which actually caused the crash.</p>
+<p align="center">&nbsp;</p>
+<hr>
+<p><br>
+  <font size="+1"><a name="ErrorsHandled"></a><strong>Errors Handled By Crash Guard</strong></font></p>
+<p>Crash Guard handles these errors which normally
+    force the user to reset the calculator:</p>
+<ol>
+  <li>Address Error</li>
+  <li>Illegal Instruction</li>
+  <li>Divide by Zero</li>
+  <li>CHK Instruction</li>
+  <li>TRAPV Instruction</li>
+  <li>Privilege Violation</li>
+  <li>Trace Interrupt</li>
+  <li>Spurious Interrupt</li>
+</ol>
+<hr>
+<p><strong><font size="+1"><a name="XML_Data_Format"></a>XML Data Format</font></strong></p>
+<p>For a sample XML data file generated with Command Post, please view <a href="ErrorLogs.xml">ErrorLogs.xml</a>. </p>
+<p>Each error report contains the following information:</p>
+<ul>
+  <li><strong>Title</strong>    
+    <ul>
+      <li>A short description of the error      </li>
+    </ul>
+  </li>
+  <li><strong>Registers
+  </strong>    
+    <ul>
+      <li>All registers a0-a6, d0-d7</li>
+      <li>User Stack Pointer (USP)</li>
+      <li>Supervisor Stack Pointer (SSP)</li>
+    </ul>
+  </li>
+  <li><strong>Error Frame
+    </strong>
+    <ul>
+      <li>For More Information Regarding Error Frames See
+        <ul>
+          <li>Microprocessor User's Manual 9th Edition. Section 6 Exception Processing.
+            M68000UM/AD. Published by Motorola.</li>
+          <li>Programmers Reference Manual. M68000PM/AD. Appendix B. Exception
+            Processing Reference. Published by Motorola.</li>
+        </ul>
+      </li>
+      <li>For Error types 1 and 2, Command Post will always report type=&quot;1&quot;</li>
+      <li>The <strong>AccessAddress</strong> and <strong>InstructionRegister</strong> Fields are only valid when the
+        <strong>ErrorFrame</strong> type is <strong>equal</strong> to <strong>zero</strong>.      </li>
+    </ul>
+  </li>
+</ul>
+<p><strong>Note:</strong> Command Post does not output the user or supervisor
+  stacks to the link port. The link port is not fast enough to support this type
+  of transmission
+  (a user stack
+  dump can take many minutes to complete!). </p>
+<hr>
+<p><strong><font size="+1"><a name="PCLinkSettings"></a>Recommended  Link Settings</font></strong><br>
+To receive error report transmissions, you
+    can either use Command Post's <a href="f_three.htm#LinkPortLogger">Link Port Logger</a> feature
+    or a <strong>gray</strong> graphlink cable connected to a computer which is running
+    a program such as HyperTerminal with the following settings: Bits Per Second <em>9600</em>,
+Data Bits <em>8</em>, Parity <em>None</em>, Stop Bits <em>1</em>, Flow Control <em>Hardware</em>. </p>
+<p>It currently (as of 12/22/2003) is not possible to make logs using the Black
+  or USB graph-links. The official Talk-TI SDK does not officially support
+  the
+  receiving or
+  sending of raw data.</p>
+<hr>

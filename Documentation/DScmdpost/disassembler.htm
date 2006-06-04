@@ -1,0 +1,212 @@
+<!--Command Post: Disassembler - Special Topics-->
+
+<center>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr>
+      <td align="left"> <b><font size="-1" face="Arial">Command Post Home Page : <font color=#FF0000>Disassembler
+              - Special Topics</font></font></b><br>
+      </td>
+      <td align="right"><font size="-1">
+        <div class="text2"> <a href="index.htm">Goto Table of Contents</a></div>
+        </font> </td>
+    </tr>
+  </table>
+  <br>
+</center>
+<center>
+  <font size="+1"><b>Disassembler - Special Topics</b></font>
+</center>
+<p align="left">The Command Post disassembler is a very powerful and complex tool
+  which disassembles binary data into 68k assembly language. If you choose to install
+  a <a href="external_databases.htm">rom
+  call database</a>, Command Post can identify nearly any rom call that is made within
+  a program. The disassembler also includes  support for Line 1111 rom calls,
+  branches and jumps, and
+  Line 1010 ER_throw
+  disassembly. When you jump to the data portion of an unarchived ASM program, <a href="http://tigcc.ticalc.org/doc/system.html#EX_patch">EX_patch</a> is
+  automatically applied to ensure all absolute references are relocated and ready
+  for disassembly.</p>
+<p align="left">If the <a href="f_two.htm#Bookmarks">bookmarks</a> (either
+    manually, or through a command such as <a href="f_two.htm#Jmp_Var">Jump: Variable</a> )
+    are set, Command Post will utilize idle
+    processor cycles to significantly increase disassembly performance by pre-disassembling
+    instructions
+    and placing them in a buffer. Third party applications can use Command Post's
+    disassembler through the <a href="extensibility.htm#Disassemble_One">shared-code
+    library</a>.</p>
+<p align="left">For
+  more information about the disassembler, and features which support it, see <a href="f_three.htm#DASM_TOOLS">Disassembly
+  Tools</a>,
+  and the <a href="f_one.htm#Format">Formats</a> dialog documentation.</p>
+<p align="center"><img src="images/VIEWDISASSEMBLY.png" width="244" height="132">&nbsp;<img src="images/DASM_BUFFERING.png" width="244" height="132"></p>
+<p align="left"><font size="+1"><strong>Special Topics:</strong></font></p>
+<ul>
+  <li><a href="#DASM_KEYS">Disassembler Keys</a></li>
+  <li><a href="#LineF">F-Line (1111) Instruction Support</a></li>
+  <li><a href="#LineA">A-Line (1010) Instruction Support</a></li>
+  <li><a href="#DASM_NOTES">Disassembler Notes</a></li>
+  <li><a href="#ROM_CALL_SUPPORT">Rom Call &amp; Memory Naming Support</a></li>
+</ul>
+<hr>
+<p align="center"><strong><font size="+1"><a name="DASM_KEYS"></a>Disassembler Keys</font></strong></p>
+<div align="center">
+  <table width="500" border="1" cellspacing="1" cellpadding="1">
+    <tr>
+      <td width="144">
+        <center>
+          <b>KEYS</b>
+        </center>
+      </td>
+      <td width="356">
+        <center>
+          <b>ACTION</b>
+        </center>
+      </td>
+    </tr>
+    <tr>
+      <td width="144"> <img src="images/up.png" width="33" height="19" alt="Up" align="middle"></td>
+      <td width="356"><p>Scroll the disassembly up 1 instruction.</p>
+        <p>If you are viewing a memory area between Bookmark1 and Bookmark2 and the
+          background disassembly process has completed, this function will be very
+          fast.</p>
+        <p>If you are not viewing memory between Bookmark1 and Bookmark2 and the background
+          disassembly task has not completed, this function acts the same as pressing <img src="images/minus.PNG" alt="MINUS" width="31" height="19" align="texttop">.</p></td>
+    </tr>
+    <tr>
+      <td width="144"><img src="images/down.png" width="33" height="19" alt="Down" align="middle"> </td>
+      <td width="356"><p>Scroll the disassembly down 1 instruction.</p>
+        <p>Due to the nature of disassembly, scrolling down is extremely fast.</p></td>
+    </tr>
+    <tr>
+      <td width="144"><img src="images/diamond.png" width="29" height="20" alt="Diamond" align="middle"> <img src="images/up.png" width="33" height="19" alt="Up" align="middle"></td>
+      <td width="356"><p>Bookmark 1<br>
+          Command Post will automatically set this bookmark when you request a jump to
+            a variable's data, SYM_ENTRY structure, or an AMS global variable. This bookmark
+          always jumps to the beginning of the structure or variable.</p>
+        <p>For best results when using this bookmark, please ensure that it points
+          to a memory location that is lower than Bookmark 2.</p></td>
+    </tr>
+    <tr>
+      <td width="144"><img src="images/diamond.png" width="29" height="20" alt="Diamond" align="middle"> <img src="images/down.png" width="33" height="19" alt="Down" align="middle"></td>
+      <td width="356"><p>Bookmark 2<br>
+          Command Post will automatically set this bookmark when you request a jump to
+            a variable's data, SYM_ENTRY, or an AMS global variable who's size is known.
+          This bookmark always jumps to the end of the structure or variable.</p>
+        <p>For best results when using this bookmark, please ensure that it points
+          to a memory location that is higher than Bookmark 1.</p></td>
+    </tr>
+    <tr>
+      <td width="144"><img src="images/2nd.png" width="33" height="20" alt="2nd" align="middle"> <img src="images/up.png" width="33" height="19" alt="Up" align="middle"></td>
+      <td width="356"><p>Page Up</p>
+      <p>Due to the nature of disassembly, this function is rather slow. If you are
+      viewing an area between Bookmark1 and Bookmark2 and the background disassembly
+      process has finished its work, this function will be nearly as fast as <img src="images/2nd.png" width="33" height="20" alt="2nd" align="texttop"> <img src="images/down.png" width="33" height="19" alt="Down" align="texttop">.</p></td>
+    </tr>
+    <tr>
+      <td width="144"><img src="images/2nd.png" width="33" height="20" alt="2nd" align="middle"> <img src="images/down.png" width="33" height="19" alt="Down" align="middle"></td>
+      <td width="356"><p>Page Down</p>
+      <p>This scrolls the disassembly down one page. Due to the nature of disassembly,
+      this feature will always be extremely responsive.</p></td>
+    </tr>
+    <tr>
+      <td width="144"><img src="images/plus.PNG" alt="PLUS" width="30" height="20"></td>
+      <td width="356"><p>Adjust Disassembly By One WORD (positive direction).</p>
+      <p>Use this key if you feel that the disassembler is incorrectly disassembling
+        instructions.</p></td>
+    </tr>
+    <tr>
+      <td width="144"><img src="images/minus.PNG" alt="MINUS" width="31" height="19"></td>
+      <td width="356"><p>Adjust Disassembly By One WORD (negative direction).</p>
+      <p>Use this key if you feel that the disassembler is incorrectly disassembling
+      instructions.</p></td>
+    </tr>
+  </table>
+</div>
+<p>&nbsp;</p>
+<hr>
+<p><font size="+1"><strong><a name="LineF"></a>F-Line (1111) Instruction Support</strong></font></p>
+<p>The disassembler supports valid Line 1111 emulator rom calls, bsr, and bra. Valid
+  line 1111 instructions will be prefixed with F. Supported formats are:</p>
+<ul>
+  <li>FCall $<em>rom_call_index ;rom_call_to_string</em></li>
+  <li>F_bsr $<em>address</em></li>
+  <li>F_bra $<em>address.</em></li>
+</ul>
+<hr>
+<p><font size="+1"><strong><a name="LineA"></a>A-Line (1010) Instruction Support</strong></font></p>
+<p>The disassembler supports valid Line 1010 ER_throw calls by printing the error
+  number, and following the instruction with a comment which describes the error
+  number.</p>
+<p><strong>Example:</strong><br>
+ER_throw $<em>error_code</em> ;<em>error_to_string</em></p>
+<hr>
+<p><font size="+1"><strong><a name="DASM_NOTES"></a>Disassembler Notes</strong></font></p>
+<ul>
+  <li>the disassembler supports chk.l even though it is invalid on the MC68000</li>
+  <li>the
+    disassembler interprets dbf as dbra (they are equivalent)</li>
+  <li>the condition code hi is always interpreted as cc (they are equivalent)</li>
+  <li>the condition
+    code lo is always interpreted as cs (they are equivalent)</li>
+  <li>line 1010 exceptions
+    are translated to ER_throw $xxxx.
+    <a href="f_two.htm#AMSGlobalVariable">Jump to EV_errorCode</a> and <a href="f_two.htm#Edit">Edit</a> that <em>WORD</em> so
+    that it contains 0hxxxx if you want to know what the error code means.</li>
+  <li>no  EA mask checks are implemented, so data can be interpreted
+      as illegal instructions such as move.w a6,sr . This helps keep the disassembler
+    small and fast while discouraging reverse engineering.</li>
+</ul>
+<hr>
+<p><strong><font size="+1"><a name="ROM_CALL_SUPPORT"></a>Rom Call Support</font></strong></p>
+<p>The disassembler provides full support for rom calls when a <a href="external_databases.htm">rom
+    call
+
+    database</a> is
+  installed. A list of supported formats follows:</p>
+<ul>
+  <li><strong>movea.l x(An),Ay
+  </strong>    
+    <ul>
+      <li>When the disassembler encounters an instruction with the preceding format,
+        it will divide x by four and perform a very fast binary search of the rom
+        call database. If the rom call is found, it will appear as a comment following
+        the instruction. If y is equal to seven, Command Post will not perform the
+        rom call lookup.</li>
+    </ul>
+  </li>
+  <li><strong>jmp.l
+$x </strong>    
+    <ul>
+      <li>Command Post will use a linear search of an internal database to determine
+        if the absolute address x represents an entry in the jump table. If the address
+        is determined to be a rom call, the name of the rom call will appear as a
+        comment following the instruction.</li>
+      <li>If the calculator is low on RAM, this feature may not be available.</li>
+    </ul>
+  </li>
+  <li><strong>FCall
+$x </strong>    
+    <ul>
+      <li>When Command Post encounters a Line 1111 rom call, it will search the rom
+        call database for rom call x using a very fast binary search. If the rom
+        call is found, it will appear as a comment following the FCall instruction.</li>
+    </ul>
+  </li>
+  <li><strong>Memory Locations
+</strong>(these features require you to install <a href="external_databases.htm">external
+databases</a> or they will not be available)    
+    <ul>
+      <li>When disassembling, if the first disassembly line is the address of a rom
+        call, Command Post will display the rom call name as text in the status line.
+        If the calculator is low on RAM or a <a href="external_databases.htm">romcall
+        database</a> is not installed, this
+        feature may not be available.</li>
+      <li>Additionally, Command Post will notify you via the
+        status line when the top line of the disassembly has an alias found in
+        the memdat database. This feature is always available when a <a href="external_databases.htm">memdat
+        database</a>        is installed.</li>
+    </ul>
+  </li>
+</ul>
+<hr>
+<p>&nbsp;</p>

@@ -1,0 +1,136 @@
+$Id: notes.txt 20 2004-08-06 20:27:53Z dietsche $
+
+http://creativecommons.org/licenses/by-nc/1.0/
+
+Bits Per Second 9600, Data Bits 8, Parity none, Stop Bits 1, Flow Control Hardware
+
+Command Post 1.0 BUGS (+ indicates fixed, - indicated not fixed)
++Set Defaults does not reset the max screen width hex editor formats setting properly.
++Foreword (mispelling of forward)
+
+New Features Since The App 2002 Contest:
+*changed the internal app name from 'KFLASH' to 'cmdpost'
+*support for the Voyage 200 PLT
+*F1->Formats->Reset Magic (ability to retain settings even after calculator resets and/or crashes in most cases)
+*Moved Crash Protection on/off setting to the F1->Formats dialog
+*Anti-Crash Protection is now called "Crash Guard"
+*Greatly Expanded F2->2:Jump Options and menus
+*F2->Edit-> Added the ability to apply bit masks (modes: NONE, AND, OR, XOR)
+*Enhanced Leak Watch Abilities (More Accurate and Informative)
+*Removed HeapShuffle menu item (TI-BASIC Extension was retained), 
+*New Menu Item: F3->App Info allows the user to browse apps, and see 3 (ACB, App Header, Flags) pages of information about each app.
+*New Menu Item: F3->Link Port Logger allows logging of the link port (visual & file)
+*New Menu Item F3->Heap Walk:{STATUS, DUMP, SYM} allows programmers to use the ROM call of the same name without writting a small program to peform the task.
+*Extended F4->Memory Status to include more information
+*Jump To Handle Feature automatically sets bookmarks, automatic ex_patch of ASM programs for more accurate disassembly
+*ASM programs automatically have EX_patch applied (this helps to give corect info in the disassembly view)
+*Search can be limited by an upper bound... lower bound is determined by the hex_editor cursor position
+*BCLR Basic Extension
+*BSET Basic Extension
+*BTST Basic Extension
+
+
+
+NOTES for KFLASH             
+
+To Fix/Do:
+	check the common vars for correct jump begin/jump end settings
+*TIOS_entries, move Jump Table TO COrrect Dialog
+
+Lionel:
+* it doesn't disassemble properly the short references to the ROM_CALLs. Disassemble "push_exact1" (4F2). It has many references to top_estack, but they are not disassembled as references to top_estack.
+	*investigation: command post has never tried to determine if word references are rom calls, or in the jump table.
+	
+* on my real 89 HW2 AMS 2.05, jumping to the 'Other Address' 'KEY_QUEUE Keybuffer' jumps to a location in Flash... 
+	*investigation: todo
+	
++ I saw by chance that cmpa.l %a2,%a3 is not properly disassembled (it is disassembled as dc.w $b7ca). There's one such instruction at 0x283658 on AMS 2.05 for 89.
+*I saw Command Post Plus fails to disassemble a number of instructions in the AMS reset code (ROM_base + 0x12188). Scroll down a bit (hundreds of bytes) to find them. Note that ttdasm misses sbcd -(a1),-(a0)
+	*investigation: todo
+	
++Setting Bookmark1 = Bookmark2 causes disassembler to crash while buffering.
+
+Samuel:
+*command post plus cannot properly dissasemble "cmp.l a0,a1".
+
+Jesse:
++it also detects the hw3 patch as hw2 patch. 
+
+base conversion ti-basic extension
+
+Disassembler Notes:
+*the disassembler supports chk.l even though it is invalid on the MC68000
+*the disassembler translates dbf to dbra because many asm programers write dbra instead of dbf...
+*the condition code hi is always translated as cc  (they are equivalent)
+*the condition code lo is always translated as cs  (they are equivalent)
+*line 1010 exceptions are translated to ER_throw $xxxx where xxxx is (opcode & 0x5fff). jump to EV_errorCode and edit that WORD so that it contains 0hxxxx if you want to know what the error code means.
+*Does not check EA masks, so data can be interpreted as illegal instructions such as move.w a6,sr . This aids in app size, and discourages reverse engineering.
+*after crash, the pc may point 2-8 bytes ahead of the instruction that caused the error.
+
+Peform crash analysis - save in file)
+Var-Link replacment (show hidden & system files as well...)
+
+Hex Editor: memory map,
+back/foreward
+undo/redo
+sto
+rcl
+
+
+Key Combos
+TI-89:
+	abcdef
+	ABCDEF
+	=(),/|
+
+	<ENTER> edit
+	<DIAMOND ENTER> Find
+	<CLEAR> Find Foreword
+	<DIAMOND> <CLEAR> Find Backwards
+    <DIAMOND> <UP>	jump to bookmark one	(set by using var-link to edit a variable or sym_entry)
+    <DIAMOND> <DOWN> jump to bookmark two	(set by using var-link to edit a variable or sym_entry)
+    <DIAMOND> <LEFT> jump backwards exactly two bytes
+    <DIAMOND> <RIGHT> jump forewords exactly two bytes
+TI-92p:
+	abcdef
+	ABCDEF
+	<ENTER> Edit
+	<DIAMOND ENTER> Find
+	<CLEAR> Find Foreword
+	<DIAMOND> <CLEAR> Find Backwards
+	<DIAMOND> <UP>	jump to bookmark one
+    <DIAMOND> <DOWN> jump to bookmark two
+    <DIAMOND> <LEFT> jump backwards exactly two bytes
+    <DIAMOND> <RIGHT> jump forewords exactly two bytes
+	
+dialogs allow any valid expression that does not cause side effects such as other applications starting, or storing a result to a variable
+syntax for expressions used in the dialog box are similar to those used in the builtin application Home
+
+Furthermore, edit fields in dialog boxes allow full use of the var-link for easy selection of variables
+On the TI-89, the alpha lock is automatically turned off for dialog boxes which expect numeric input
+
+
+As for your code, it is a victim of the " unsigned long in prototype" bug. The prototype of OO_GetAppAttr is incorrect in TIGCC 0.94 beta 19.
+
+Here's how to get your code to compile under TIGCC:
+#undef OO_GetAppAttr
+#define OO_GetAppAttr _rom_call(void*,(short,unsigned long),3FC)
+#undef OO_FIRST_APP_ATTR
+#define OO_FIRST_APP_ATTR 0x10000
+
+#define LeakWatch_begin(obj) \
+((void (* __ATTR_TIOS__ const)(void))OO_GetAppAttr(obj,OO_FIRST_APP_ATTR + 12))()
+
+#define LeakWatch_end(obj,a) \
+((DWORD (* __ATTR_TIOS__ const)(const char *))OO_GetAppAttr(obj,OO_FIRST_APP_ATTR + 13))(a)
+
+HANDLE cmdpost_appid=EV_getAppID("KFLASH");
+
+if(cmdpost_appid)LeakWatch_begin(cmdpost_appid);
+HeapAlloc(500);
+if(cmdpost_appid)LeakWatch_end(cmdpost_appid,"Test Program");
+
+MIN_AMS should be set to at least 200, since those functions are not available in AMS 1.00 (and neither is Command Post, anyway).
+   
+  
+  

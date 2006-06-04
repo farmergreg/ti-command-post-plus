@@ -1,0 +1,129 @@
+<!--Command Post: Extensibility-->
+<style type="text/css">
+<!--
+code {
+	font-size: medium;
+}
+-->
+</style>
+
+
+<center>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr>
+      <td align="left"> <b><font size="-1" face="Arial">Command Post Home Page : <font color="#FF0000">Shared-Code
+              Library</font></font></b><br>
+      </td>
+      <td align="right"><font size="-1">
+        <div class="text2"> <a href="index.htm">Goto Table of Contents</a></div>
+        </font> </td>
+    </tr>
+  </table>
+  <br>
+</center>
+<center>
+  <font size="+1"><strong>Command Post Shared-Code Library</strong></font><strong>
+  </strong>
+</center>
+<p>Command Post exports a shared-code library for developers to use in their applications.
+  Click on
+    a function to view the corresponding documentation. Before using these functions,
+  <a href="downloads/CommandPostExport.h">CommandPostExport.h</a> must be included in your
+  project. <a href="downloads/CommandPostExport.h">CommandPostExport.h</a> will work with TI-Flash Studio, but requires slight
+  modifications for compatibility with TIGCC projects.</p>
+<ul>
+  <li><a href="#CommandPostAppID">How To Determine Command Post Plus's AppID</a></li>
+  <li><a href="#OpenDisassemblyDatabases">OpenDisassemblyDatabases</a></li>
+  <li><a href="#CrashGuardState">CrashGuardState</a></li>
+  <li><a href="#DASM_DAT">DASM_DAT</a></li>
+  <li><a href="#DisableCrashGuard">DisableCrashGuard</a></li>
+  <li><a href="#Disassemble_One">Disassemble_One</a></li>
+  <li><a href="#EnableCrashGuard">EnableCrashGuard</a></li>
+  <li><a href="#LeakWatch_Begin">LeakWatch_Begin</a></li>
+  <li><a href="#LeakWatch_End">LeakWatch_End</a></li>
+  <li><a href="#VectorBackup">MakeExceptionVectorBackup</a></li>
+  <li><a href="#CloseDisassemblyDatabases">CloseDisassemblyDatabases</a></li>
+</ul>
+<hr>
+<p><a name="CommandPostAppID"></a>This code shows how to determine Command Post Plus's AppID.</p>
+<p><code><font color="#0000FF">const</font> <font color="#0066FF">UCHAR</font> cmd_post_app_id[]=&quot;<font color="#CC3333">CMDPOST</font>&quot;;<br>
+  <font color="#0066FF">AppID</font> cmd_post;<br>
+  cmd_post=EV_getAppID(cmd_post_app_id);</code>
+</p>
+<hr>
+<p><code><a name="CloseDisassemblyDatabases" id="CloseDisassemblyDatabases"></a><font color="#0066FF">void</font> CMDPOST_CloseDisassemblyDatabases(<font color="#0066FF">void</font>);</code></p>
+<p>Use this function to close the disassembly databases if you previously opened
+  them using <code><a href="#OpenDisassemblyDatabases">CMDPOST_OpenDisassemblyDatabases</a></code><strong>.</strong></p>
+<hr>
+<p><code><a name="CrashGuardState"></a><font color="#0066FF">BOOL</font> CMDPOST_CrashGuardState(<font color="#0066FF">AppID</font> cmdpost);</code></p>
+<p>This function returns TRUE if Command Post Plus's crash guard feature is active.<br>
+  If
+the Crash Guard is not active, this function returns FALSE.</p>
+<hr>
+<p><code><a name="DisableCrashGuard"></a><font color="#0000FF">void</font> CMDPOST_DisableCrashGuard(<font color="#0066FF">AppID</font> cmdpost);</code></p>
+<p>This function disables Command Post Plus's Crash Guard feature. <code><a href="#CrashGuardState">CMDPOST_CrashGuardState</a></code> should be
+  called afterwards to determine if Crash Guard is off or on. Command Post may refuse
+  to remove Crash Guard if it detects a kernel installation.</p>
+<hr>
+<p><code><font color="#0000FF"><a name="Disassemble_One"></a>void</font> CMDPOST_Disassemble_One(<font color="#0066FF">AppID</font> cmdpost, <font color="#0000FF">unsigned
+short</font> <font color="#FF0000">* </font>pc, <font color="#0066FF">DASM_DAT</font> <font color="#FF0000">* </font>buffer);</code></p>
+<p>This function is used internally in Command Post Plus to perform disassembly.
+  Simply pass the Program Counter (pc) and a pointer to a buffer large enough to
+  hold <font color="#0066FF">DASM_DAT</font>.
+  Upon return, <font color="#993333">buffer.text</font> will contain the disassembly
+  and <font color="#993333">buffer.pc</font> will contain
+  the address of the next instruction to disassemble.</p>
+<p><strong>NOTE:</strong> No error checking
+  is done - buffer overruns are possible!. <font color="#993333">buffer.text</font>  is
+  intentionally oversized. A buffer size of 512 bytes is  enough for most
+  disassembly tasks. 
+  You should take into consideration ER_string lengths as well as the strings
+  found in the Rom Call database.
+  <!--"movem.l a0/a2/a4/a6/a7/d0/d2/d4/d6/d7,-(sp)" is 43 Characters. -->
+If you want to make use of the Rom Call database, make sure that you call <code><a href="#OpenDisassemblyDatabases">CMDPOST_OpenDisassemblyDatabases</a></code> prior
+to using this entry point to perform disassembly.</p>
+<p><strong>NOTE:</strong> This function is <strong>ONLY</strong> available when Command Post Plus (v2.0) is installed.
+  If Command Post v1.0 is installed, this function is NOT available.</p>
+<p>DASM_DAT is defined as:</p>
+<p><font color="#0000FF" size="-1"><a name="DASM_DAT"></a>#define</font><font size="-1"> MAX_DASM_TEXT_LEN (<font color="#009900">1024</font>)</font></p>
+<p><font size="-1"><code><font color="#0000FF">typedef struct</font>{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">unsigned short</font> <font color="#FF0000">*</font>pc;	<font color="#990000">//the next address to be disassembled</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">char</font> text[<font color="#0066FF">MAX_DASM_TEXT_LEN</font>];	<font color="#990000">//human
+readable disassembly code ie &quot;move.l
+  a0,-(sp)&quot;</font><br>
+}<font color="#0066FF">DASM_DAT</font>;</code></font></p>
+<hr>
+<p><code><a name="EnableCrashGuard"></a><font color="#0000FF">void</font> CMDPOST_EnableCrashGuard(<font color="#0066FF">AppID</font> cmdpost);</code></p>
+<p>This function enables Command Post Plus's Crash Guard feature. <code><a href="#CrashGuardState">CMDPOST_CrashGuardState</a></code> should
+  be called afterwards to determine if Crash Guard is off or on. Command Post may
+refuse to enable Crash Guard if a kernel installation is detected.</p>
+<hr>
+<p><code><a name="LeakWatch_Begin"></a><font color="#0000FF">void</font> CMDPOST_LeakWatch_Begin(<font color="#0066FF">AppID</font> cmdpost);</code></p>
+<p>This function initializes Command Post's leak watch mechanism and should be called
+  whenever leak watch functionality is desired. For more information, view the documentation
+  for <code><a href="#LeakWatch_End">CMDPOST_LeakWatch_End</a></code>. For more information
+  about the leak watch feature read the documentation for <a href="f_three.htm#LeakWatch">LeakWatch</a>.</p>
+<hr>
+<p><code><a name="LeakWatch_End"></a><font color="#0000FF">void</font> CMDPOST_LeakWatch_End(<font color="#0066FF">AppID</font> cmdpost,
+    <font color="#0000FF">char</font> <font color="#FF0000">*</font> TitleString);</code></p>
+<p>This function will determine if any memory leaks have occurred since the last
+  call to <code>CMDPOST_LeakWatch_Begin</code> was
+  made. If possible memory leaks are detected, a dialog will be displayed with the
+  title specified in <em>TitleString</em>. For more information
+  about the leak watch feature read the documentation for <a href="f_three.htm#LeakWatch">LeakWatch</a>.</p>
+<p><strong>Note:</strong> It is <em>not</em> necessary to pair calls to <code>CMDPOST_LeakWatch_Begin</code> and <code>CMDPOST_LeakWatch_End</code>.</p>
+<hr>
+<p><code><a name="VectorBackup"></a><font color="#0000FF">void</font> CMDPOST_MakeExceptionVectorBackup(<font color="#0066FF">AppID</font> cmdpost);</code></p>
+<p>Calling this function forces Command Post Plus to recreate its internal backup
+  of the exception vector table. If Crash Guard is turned on, calling this function
+  has no effect. Use <code><a href="#CrashGuardState">CMDPOST_CrashGuardState</a></code> to
+  determine if Crash Guard is installed. This is an advanced feature, and should
+   be used only if a program has reason to believe that Command Post's internal vector
+  backup is corrupt or incomplete.</p>
+<hr>
+<p><code><a name="OpenDisassemblyDatabases" id="OpenDisassemblyDatabases"></a><font color="#0066FF">void</font> CMDPOST_OpenDisassemblyDatabases(<font color="#0066FF">void</font>);</code></p>
+<p>Call this function before using <code><a href="#Disassemble_One">CMDPOST_Disassemble_One</a></code> if
+  you want the disassembler to identify rom calls. If use this function, make
+  sure that <a href="#CloseDisassemblyDatabases">CloseDisassemblyDatabases</a> is called when you are finished!</p>
+<hr>
+<p>&nbsp;</p>

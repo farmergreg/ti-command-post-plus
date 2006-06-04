@@ -1,0 +1,19 @@
+[Settings]
+Archive=0
+Pack=0
+Packed Variable=
+Project Name=matrix
+GCC Switches=-Os -Wall -W -Wwrite-strings -Wpointer-arith -mpcrel -fomit-frame-pointer -mpcrel
+GNU Assembler Switches=
+Assembler Switches=-g -t
+GNU Linker Switches=
+Linker Switches=
+Debug Info=0
+Standard Library=1
+Command Line=
+Post-Build Process=
+[Included Files]
+C File 1=MatrixCode.c
+Archive File 1=extgraph.a
+Header File 1=MatrixCode.h
+Header File 2=extgraph.h

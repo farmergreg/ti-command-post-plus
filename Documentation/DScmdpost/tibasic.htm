@@ -1,0 +1,103 @@
+<!--Command Post: TI-Basic Extensions-->
+
+<center>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr>
+      <td align="left"> <b><font size="-1" face="Arial">Command Post Home Page : <font color="#FF0000">TI-Basic
+              Extensions</font></font></b><br>
+      </td>
+      <td align="right"><font size="-1">
+        <div class="text2"> <a href="index.htm">Goto Table of Contents</a></div>
+        </font> </td>
+    </tr>
+  </table>
+  <br>
+  <font size="+1"><b>Command Post TI-Basic Extensions</b></font>
+</center>
+<p>The Command Post TI-Basic Extensions are available via the catalog, and the var-link
+  screens. Each extension has extensive help built into the catalog. This help system
+  can be accessed by pressing Catalog on the TI-89, or 2nd Catalog on the TI-92 Plus,
+  next, press F3 (Flash Apps), and finally, press F1 on any of the cmdpost extensions.</p>
+<p align="center">&nbsp;</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+      <div align="center">
+        <p><b><font size="+1">TI-Basic Extensions</font></b><b><br>
+          <a href="#btstBSETbclr">Bit Manipulation</a><br>
+          <a href="#HeapDRef">HeapDRef</a><br>
+          <a href="#LowMem">LowMem</a><br>
+          <a href="#Peek">Peek</a><br>
+          <a href="#Poke">Poke</a><br>
+          <a href="#Shuffle">Shuffle</a></b></p>
+      </div>
+    </td>
+    <td><img src="images/BASIC_EXTENSIONS.png" alt="Command Post TI-Basic Extensions" width="244" height="132"></td>
+  </tr>
+</table>
+<hr>
+<p><b><font size="+1"><a name="btstBSETbclr" id="btstBSETbclr"></a>Bit Manipulation</font></b></p>
+<p>The Bit Manipulation TI-BASIC extensions <strong>bclr</strong>, <strong>bset</strong>, and <strong>btst</strong> allow you to easily
+  <em>clear</em>, <em>set</em> and <em>test</em> bits. Each command accepts two arguments address and bit_number.
+  bit_number must be between 0 and 7. There are no limitations on the address. All
+  commands return the previous value at location address before performing the requested
+  operation.</p>
+<p align="center"><img src="images/BCLR.png" alt="bclr" width="244" height="132">&nbsp;<img src="images/BSET.png" alt="bset" width="244" height="132">&nbsp;<img src="images/BTST.png" alt="btst" width="244" height="132"></p>
+<hr>
+<p><b><font size="+1">HeapDRef(handle)-&gt;int<a name="HeapDRef"></a></font></b></p>
+<p>The HeapDRef function takes a handle as an argument, calls HeapCompress, and then
+  returns the result of HeapDeref(handle); Please note that this function is considered
+  experimental, and you should not depend on the value returned by it to remain valid
+  for any period of time. This function is best used with the <a href="#Peek">Peek</a> and <a href="#Poke">Poke</a> extensions.</p>
+<p align="center"><img src="images/BASIC_HEAPDREF.png" alt="HeapDRef" width="244" height="132"></p>
+<hr>
+<p><b><font size="+1">LowMem( [enabled], [mode], [bytes] )-</font></b><font size="+1"><b>&gt;</b></font><b><font size="+1">List<a name="LowMem"></a></font></b></p>
+<p>The <b>LowMem</b> TI-Basic Extension accepts at most three arguments: enabled,
+  mode, and bytes. These correspond with the <a href="f_three.htm#LowRAM">Low RAM
+  Simulation</a> dialog box.</p>
+<ul>
+  <li> <b>Enabled</b> must be either 1 or 2. <br>
+    1 turns on the Low Ram Simulation, and 2. turns the simulation off.</li>
+  <li><b>Mode</b> must be either 1 or 2.<br>
+    1 sets the mode to All Except, and 2. will set the mode to Use</li>
+  <li><b>Bytes</b> tells the low ram simulation how many bytes are to be used or
+    left free depending on the Mode setting.</li>
+</ul>
+<p><b>LowMem</b> returns a three-element list that corresponds to the settings that
+  were active before they were changed to the ones that you requested.</p>
+<p><b>Tip: </b>You do not need to specify all three arguments. LowMem(0) for example,
+  is a legal syntax that turns off the Low RAM Simulation.</p>
+<p><b>Tip:</b> If you do not know what the current Low RAM Simulation settings are,
+  type LowMem()</p>
+<p><b>Note:</b> The amount of ram used, or left free by the simulation may be different
+  than expected. The simulation does not know how many bytes will be used by the
+  operating system after a call to LowMem has been made. The Home Screen Application,
+  for example, places the results of the LowMem operation in the Home Screen History.<br>
+</p>
+<p align="center"><img src="images/BASIC_LOW_MEM.png" alt="LowMem" width="244" height="132"></p>
+<hr>
+<p><font size="+1"><b>Peek(address)-&gt;int<a name="Peek"></a></b></font></p>
+<p>The Peek basic extensions allow you to read bytes in memory using a style which
+  is common in most dialects of the BASIC language. The address that you pass to
+  this function should be even if you are using the W or L variants, or an Address
+  Error will be thrown. PeekB returns 1 byte, PeekW returns 2 bytes, and PeekL returns
+  4 bytes from the specified memory location.</p>
+<p align="center"><img src="images/BASIC_PEEK1.png" alt="PeekB" width="244" height="132">&nbsp;<img src="images/BASIC_PEEK3.png" alt="PeekW" width="244" height="132">&nbsp;<img src="images/BASIC_PEEK2.png" alt="PeekL" width="244" height="132"></p>
+<hr>
+<p><font size="+1"><b>Poke(address, new_value)-&gt;int<a name="Poke"></a></b></font></p>
+<p>The Poke basic extensions allow you to store bytes in memory using the style which
+  is common in most dialects of the BASIC language. The address that you pass to
+  this function should be even if you are using the W or L variants, or an Address
+  Error will be thrown. The new value that you specify will be truncated to fit the
+  data type you specify (PokeB writes 1 byte, PokeW writes 2 bytes, and PokeL writes
+  4 bytes). The value previously stored at the address you poke'd a value to will
+  be returned.</p>
+<p align="center"><img src="images/BASIC_PEEK4.png" alt="PokeB" width="244" height="132">&nbsp;<img src="images/BASIC_PEEK6.png" alt="PokeW" width="244" height="132">&nbsp;<img src="images/BASIC_PEEK5.png" alt="PokeL" width="244" height="132"></p>
+<hr>
+<p><b><font size="+1">Shuffle()<a name="Shuffle"></a></font></b></p>
+<p>The <b>Shuffle</b> TI-Basic Extension is designed to help debug applications by
+  shuffling the Heap so that all dereferenced HANDLEs become invalid. This is the
+  same as using the HeapShuffle(); ROM call.</p>
+<p align="center"><img src="images/BASIC_SHUFFLE.png" alt="Shuffle" width="244" height="132"></p>
+
+

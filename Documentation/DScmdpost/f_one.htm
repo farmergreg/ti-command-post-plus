@@ -1,0 +1,123 @@
+<!--Command Post: F1-->
+
+<center>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr>
+      <td align="left"> <b><font size="-1" face="Arial">Command Post Home Page : <font color=#FF0000>F1</font></font></b><br>
+      </td>
+      <td align="right"><font size="-1">
+        <div class="text2"> <a href="index.htm">Goto Table of Contents</a></div>
+        </font> </td>
+    </tr>
+  </table>
+  <br>
+</center>
+<center>
+  <font size="+1"><b>F1: Command Post Icon</b> <img src="images/logo.jpg" width="34" height="34" alt="Command Post Logo" align="absmiddle"></font>
+</center>
+<p align="left">The Command Post Icon lets you set up Command Post. It includes the <b>Copy
+    Special</b> and <b>Paste Special</b> commands, which let you share data between
+    different editors and applications. These commands use the clipboard of the calculator.
+    They also includes several format options that let you decide how the application
+    interface will work.</p>
+<center>
+  <table width="520" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="260">
+        <p align="center"><b>F1 Command Post Icon Choices:</b><br>
+          <a href="#Special"><b>1: Copy Special</b></a><b><br>
+          <a href="#Special">2: Paste Special</a><br>
+          <a href="#Default">3: Set Defaults</a><br>
+          <a href="#Format">4: Format</a><br>
+          <a href="#About">5: About</a></b></p>
+      </td>
+      <td width="260"><img src="images/F1.png" width="244" height="132" alt="Command Post F1 Menu"></td>
+    </tr>
+  </table>
+</center>
+<hr>
+<p align="left"><font size="+1"><a name="Special"></a><strong>1: Copy Special and 2: Paste
+    Special:</strong></font></p>
+<p align="left"><b>Copy Special </b>lets you copy the <b>byte, word, long, or string</b> pointed
+  at by the cursor for later recall using paste special.</p>
+<p align="left"><b>Paste Special</b> allows you to paste a <b>byte, word, or long,
+    or string</b> to the present cursor location. You may also choose a bit mask
+    operation instead of the standard replace operation on <b>Byte, Word and Long</b> values.</p>
+<p align="left">If you are pasting a <b>Byte, Word, or Long</b> value, you may set
+  the mask to either <b>AND, OR, XOR, or NONE</b>. A setting of <b>NONE</b> simply
+  overwrites the currently selected location with the specified value. Any other
+  setting will use the specified logic on the current cursor location and the value
+  you gave in the New Value Box.</p>
+<p align="center"><img src="images/HEX_VIEW_WITH_CURSOR.png" width="244" height="132" alt="cut/copy example">&nbsp;<img src="images/CUTCOPY_2.png" width="244" height="132" alt="cut/copy example">&nbsp;<img src="images/CUTCOPY_3.png" width="244" height="132" alt="cut/copy example"></p>
+<hr>
+<p align="left"><font size="+1"><strong><a name="Default"></a>3: Set Defaults</strong></font></p>
+<p align="left">Selecting <b>F1 (Command Post Icon)</b> and selecting <b>3: Set Defaults</b> will
+  force Command Post to revert to (default) factory settings.</p>
+<center>
+  <table width="520" border="0" cellspacing="2" cellpadding="2">
+    <tr>
+      <td width="260">
+        <center>
+          <img src="images/SETDEFAULTS.png" alt="Defaults Set" width="244" height="132">
+        </center>
+      </td>
+      <td width="260">
+        <center>
+          <b>NOTE:</b> the Crash Protection default setting is ON when no kernel
+          or kernel like program is installed. If a kernel is found, the default
+          setting is OFF.
+        </center>
+      </td>
+    </tr>
+  </table>
+  <br>
+</center>
+<hr>
+<p align="left"><font size="+1"><strong><a name="Format"></a>4: Format</strong></font></p>
+<p align="left">Use the<b> format dialog</b> to control command post's integration
+  into the OS, and its Maximum Hex Editor width.</p>
+<p align="center"><img src="images/FORMATSDLG.png" alt="Formats Dialog" width="244" height="132"></p>
+<p align="left">The first Option,<b> Max Hex Editor Width</b> can be set to restrict
+  Command Post to a certain width in bytes. Command Post will automatically select
+  a width that is less than what you asked for if the display region is too small
+  to handle the requested width.</p>
+<p><b>Note:</b> The TI-89 can only display a maximum of 6 bytes on screen. However,
+  the Format dialog will allow you to choose eight, and ten byte widths. This is
+  an intentional feature which allows you to use the different calculators (TI-89,
+  TI-92p, &amp; V200) while allowing you to use the exact same keystrokes.</p>
+<p><a name="CrashGuard"></a>The <b><a href="crash_guard.htm">Crash Guard</a></b> setting
+  allows you to turn the crash protection <b>ON</b> or <b>OFF</b> at
+  will. If you have a kernel or kernel like program installed, you must uninstall
+  it before changing this setting (if you do not, Command Post will not allow you
+  to change the setting). See also, the <a href="crash_guard.htm">Crash Guard Special
+  Topics</a> area.</p>
+<p><b>NOTE:</b> <a href="crash_guard.htm">Crash Guard</a> is designed to integrate directly in to
+  the OS. When Command Post recovers on of the above errors, it will do some necessary
+  clean up, and then throw an error in such a way as to give the appearance of OS
+  handling the error; in fact, Command Post did.</p>
+<p><b>NOTE:</b> On AMS 2.04 and 2.05, the Home Screen App has a bug where it will
+  display &quot;unknown error code&quot; instead of &quot;Address Error&quot; (or
+  any of the other errors that Command Post handles). This is not serious, and TI
+  has fixed this minor glitch in AMS 2.08.</p>
+<p>The <strong><a name="TurboKeys"></a>Turbo Keys</strong> feature makes Command Post Plus more responsive
+  by speeding up the keyboard repeat rate. When you return to the AMS, the default
+  repeat rate set by the AMS will be restored.</p>
+<p>The <strong><a name="VerboseMovem"></a>Verbose Movem</strong> setting controls
+  how the disassembler handles the disassembly of movem commands. When this setting
+  is set to <strong>ON</strong>, movem statements will be displayed with complete
+  register lists. EX: <em>movem.l d0-d7/ a0-a6,-(sp).
+  </em>When this setting is set to <strong>OFF</strong>, movem statements will
+  use hexadecimal notation to describe the register list EX: <em>movem.l #0xfffe,-(sp)
+  .</em></p>
+<p>The <b><a name="ResetMagic"></a>Reset Magic</b> setting will attempt to remember the settings of the formats
+  dialog after a crash. By turning this setting on, you will override the default
+settings which are normally set after a crash or calculator reset.</p>
+<hr>
+<p><b><font size="+1"><a name="About"></a>5: About</font></b></p>
+<p>Displays the <b>About dialog box</b> which contains the Command Post version and
+  copyright information. Press <b>ENTER</b> or <b>ESC</b> to close the dialog box.</p>
+<p align="center"><img src="images/ABOUT.png" alt="About Dialog" width="244" height="132">
+  <!--Type in a Capitol 'G' in this dialog to make the icons move ;) -->
+</p>
+
+
